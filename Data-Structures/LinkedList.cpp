@@ -73,6 +73,7 @@ public:
     newNode->setNext(next);
     newNode->setPrevious(actual);
     actual->setNext(newNode);
+    this->len++;
   }
 
   // Returns the first NODE in the list.
