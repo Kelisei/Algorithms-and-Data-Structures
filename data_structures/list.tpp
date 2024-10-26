@@ -46,7 +46,7 @@ void Node<T>::setPrevious(Node<T> *previous)
     this->previous = previous;
 }
 
-// LinkedList class member function definitions
+
 template <typename T>
 LinkedList<T>::LinkedList() : first(nullptr), last(nullptr), len(0) {}
 
@@ -346,6 +346,18 @@ std::string LinkedList<T>::toString()
     }
     str += "]";
     return str;
+}
+
+template <typename T>
+typename LinkedList<T>::Iterator LinkedList<T>::begin()
+{
+    return Iterator(this->first);
+}
+
+template <typename T>
+typename LinkedList<T>::Iterator LinkedList<T>::end()
+{
+    return Iterator(nullptr);
 }
 
 template <typename T>

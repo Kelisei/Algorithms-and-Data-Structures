@@ -182,3 +182,23 @@ TEST(LinkedListTest, TestToString)
     list.add(3);
     EXPECT_EQ(list.toString(), "[1, 2, 3]");
 }
+
+TEST(LinkedListTest, TestIterator)
+{
+    LinkedList<int> list;
+    list.add(1);
+    list.add(2);
+    list.add(3);
+    for(int element : list)
+    {
+        std::cout << element << std::endl;
+    }
+    list.add(1);
+    list.add(2);
+    list.add(3);
+    list.add(4);
+    for (int element : list)
+    {
+        std::cout << element << std::endl;
+    }
+}

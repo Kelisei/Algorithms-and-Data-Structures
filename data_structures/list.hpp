@@ -40,7 +40,7 @@ private:
 
 public:
     Node(T data, Node *previous, Node *next)
-            : data(data), previous(previous), next(next) {}
+        : data(data), previous(previous), next(next) {}
     Node *getNext();
     Node *getPrevious();
     T getData();
@@ -60,6 +60,47 @@ private:
     void removeNode(Node<T> *node);
 
 public:
+    class Iterator
+    {
+    public:
+        Node<T> *node;
+        Iterator(Node<T> *start) : node(start) {}
+
+        bool hasNext() const
+        {
+            return node != nullptr;
+        }
+
+        T next()
+        {
+            if (!hasNext())
+            {
+                throw std::out_of_range("No more elements");
+            }
+            T data = node->getData();
+            node = node->getNext();
+            return data;
+        }
+        // Operador de desreferencia
+        int operator*() const
+        {
+            return node->getData();
+        }
+
+        // Operador de incremento
+        Iterator &operator++()
+        {
+            node = node->getNext();
+            return *this;
+        }
+
+        // Operador de comparación !=
+        bool operator!=(const Iterator &other) const
+        {
+            return node != other.node;
+        }
+    };
+
     LinkedList();
     void add(T data) override;
     void remove(T data) override;
@@ -77,8 +118,11 @@ public:
     int indexOf(T data) override;
     int lastIndexOf(T data) override;
     bool operator==(const List<T> &list) const override;
+
     std::size_t hashCode() override;
     std::string toString() override;
+    Iterator begin();
+    Iterator end();
     virtual ~LinkedList() noexcept;
 };
 

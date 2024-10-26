@@ -1,4 +1,4 @@
-cmake
+cmake .
 cd build
 make
 ctest --output-on-failure

@@ -4,7 +4,7 @@ project(AaDS)
 # Add source files
 set(SOURCE_FILES 
     algorithms/algorithms.cpp
-    data_structures/list.cpp
+    data_structures/list.tpp
 )
 
 # Add the GoogleTest framework

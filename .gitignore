@@ -365,3 +365,17 @@ FodyWeavers.xsd
 
 gogletest/
 build/
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+CMakeScripts/
+CMakeTmp/
+CMakeError.log
+CMakeOutput.log
+_deps/
+*.cmake
+*.a
