@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "algorithms.cpp"
+#include "algorithms.hpp"
 
 TEST(AlgorithmsTest, InsertionSortTest) {
   int array[] = {5, 2, 9, 1, 5, 6};

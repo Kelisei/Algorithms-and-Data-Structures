@@ -46,6 +46,39 @@ void Node<T>::setPrevious(Node<T> *previous)
     this->previous = previous;
 }
 
+// LinkedList class member function definitions
+template <typename T>
+bool LinkedList<T>::ListIterator::hasNext() const
+{
+    return node != nullptr;
+};
+template <typename T>
+T LinkedList<T>::ListIterator::next()
+{
+    if (!hasNext())
+    {
+        throw std::out_of_range("No more elements");
+    }
+    T data = node->getData();
+    node = node->getNext();
+    return data;
+}
+template <typename T>
+int LinkedList<T>::ListIterator::operator*() const
+{
+    return node->getData();
+}
+template <typename T>
+typename LinkedList<T>::ListIterator &LinkedList<T>::ListIterator::operator++()
+{
+    node = node->getNext();
+    return *this;
+}
+template <typename T>
+bool LinkedList<T>::ListIterator::operator!=(const ListIterator &other) const
+{
+    return node != other.node;
+}
 
 template <typename T>
 LinkedList<T>::LinkedList() : first(nullptr), last(nullptr), len(0) {}
@@ -349,15 +382,15 @@ std::string LinkedList<T>::toString()
 }
 
 template <typename T>
-typename LinkedList<T>::Iterator LinkedList<T>::begin()
+typename LinkedList<T>::ListIterator LinkedList<T>::begin()
 {
-    return Iterator(this->first);
+    return ListIterator(this->first);
 }
 
 template <typename T>
-typename LinkedList<T>::Iterator LinkedList<T>::end()
+typename LinkedList<T>::ListIterator LinkedList<T>::end()
 {
-    return Iterator(nullptr);
+    return ListIterator(nullptr);
 }
 
 template <typename T>
