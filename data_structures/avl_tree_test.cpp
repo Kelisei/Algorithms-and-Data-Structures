@@ -2,7 +2,8 @@
 #include <gtest/gtest.h>
 #include "avl_tree.hpp"
 
-TEST(AVLTest, AVLInsertionTest){
+TEST(AVLTest, AVLInsertionTest)
+{
     AVLTree<int> tree = AVLTree<int>(10);
     tree.insert(20);
     tree.insert(30);
@@ -16,7 +17,6 @@ TEST(AVLTest, AVLInsertionTest){
     ASSERT_TRUE(tree.contains(40));
     ASSERT_TRUE(tree.contains(50));
     ASSERT_TRUE(tree.contains(25));
-    tree.inOrderTraversal([](int data){
-        std::cout << data << " ";
-    });
+    tree.inOrderTraversal([](int data)
+                          { std::cout << data << " "; });
 }
