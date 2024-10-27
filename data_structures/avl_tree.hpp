@@ -1,8 +1,9 @@
 #ifndef AVL_TREE_HPP
 #define AVL_TREE_HPP
 
+#include "tree.hpp"
 template <typename T>
-class AVLNode
+class AVLNode : public Tree<T>
 {
 private:
     T data;
@@ -11,7 +12,7 @@ private:
     int height;
 
 public:
-    AVLNode(T data);
+    AVLNode(const T &data);
     T getData();
     AVLNode<T> *getLeft();
     AVLNode<T> *getRight();
@@ -19,6 +20,7 @@ public:
     void setLeft(AVLNode<T> *left);
     void setRight(AVLNode<T> *right);
     void setHeight(int height);
+    ~AVLNode();
 };
 
 template <typename T>
@@ -38,16 +40,20 @@ private:
     void inOrderTraversal(AVLNode<T> *node, void (*func)(T data));
     void preOrderTraversal(AVLNode<T> *node, void (*func)(T data));
     void postOrderTraversal(AVLNode<T> *node, void (*func)(T data));
+    size_t size(AVLNode<T> *node);
 
 public:
-    AVLTree(T data);
+    AVLTree(const T &data);
     AVLTree();
-    void insert(T data);
-    void remove(T data);
-    bool contains(T data);
+    void insert(const T &data);
+    void remove(const T &data);
+    bool contains(const T &data);
     void inOrderTraversal(void (*func)(T data));
     void preOrderTraversal(void (*func)(T data));
     void postOrderTraversal(void (*func)(T data));
+    void clear();
+    bool isEmpty();
+    size_t size();
 };
 
 #include "avl_tree.tpp"

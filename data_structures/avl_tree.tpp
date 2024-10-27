@@ -3,7 +3,7 @@
 
 #include "avl_tree.hpp"
 template <typename T>
-AVLNode<T>::AVLNode(T data) : data(data), height(1), left(nullptr), right(nullptr) {}
+AVLNode<T>::AVLNode(const T &data) : data(std::move(data)), height(1), left(nullptr), right(nullptr) {}
 template <typename T>
 T AVLNode<T>::getData() { return data; }
 template <typename T>
@@ -20,15 +20,15 @@ template <typename T>
 void AVLNode<T>::setHeight(int height) { this->height = height; }
 
 template <typename T>
-AVLTree<T>::AVLTree(T data) : root(new AVLNode<T>(data)) {}
+AVLTree<T>::AVLTree(const T &data) : root(new AVLNode<T>(data)) {}
 template <typename T>
 AVLTree<T>::AVLTree() {}
 template <typename T>
-void AVLTree<T>::insert(T data) { root = insert(root, data); }
+void AVLTree<T>::insert(const T &data) { root = insert(root, data); }
 template <typename T>
-void AVLTree<T>::remove(T data) { root = remove(root, data); }
+void AVLTree<T>::remove(const T &data) { root = remove(root, data); }
 template <typename T>
-bool AVLTree<T>::contains(T data) { return contains(root, data); }
+bool AVLTree<T>::contains(const T &data) { return contains(root, data); }
 template <typename T>
 void AVLTree<T>::inOrderTraversal(void (*func)(T data)) { inOrderTraversal(root, func); }
 template <typename T>
@@ -185,4 +185,34 @@ void AVLTree<T>::postOrderTraversal(AVLNode<T> *node, void (*func)(T data))
     postOrderTraversal(node->getRight(), func);
     func(node->getData());
 }
+
+template <typename T>
+void AVLTree<T>::clear()
+{
+    root->clear();
+    root = nullptr;
+}
+
+template <typename T>
+bool AVLTree<T>::isEmpty()
+{
+    return root == nullptr;
+}
+
+template <typename T>
+size_t AVLTree<T>::size()
+{
+    return size(root);
+}
+
+template <typename T>
+size_t AVLTree<T>::size(AVLNode<T> *node)
+{
+    if (node == nullptr)
+    {
+        return 0;
+    }
+    return 1 + size(node->getLeft()) + size(node->getRight());
+}
+
 #endif
