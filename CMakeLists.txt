@@ -4,7 +4,8 @@ project(AaDS)
 # Add source files
 set(SOURCE_FILES 
     algorithms/algorithms.cpp
-    data_structures/list.tpp
+    data_structures/linked_list.tpp
+    data_structures/avl_tree.tpp
 )
 
 # Add the GoogleTest framework
@@ -29,6 +30,7 @@ add_executable(
     algorithms/algorithms_test.cpp
     tests/main_test.cpp
     data_structures/linked_list_test.cpp
+    data_structures/avl_tree_test.cpp  # Add the avl_tree test file
 )
 
 # Link libraries to the test executable

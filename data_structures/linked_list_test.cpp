@@ -1,6 +1,6 @@
 #include <iostream>
 #include <gtest/gtest.h>
-#include "list.hpp"
+#include "linked_list.hpp"
 
 TEST(LinkedListTest, TestAdd)
 {
