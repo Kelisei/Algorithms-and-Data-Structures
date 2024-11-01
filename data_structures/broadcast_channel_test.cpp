@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "channel.tpp"
+#include "broadcast_channel.tpp"
 
 TEST(BroadcastChannelTest, BroadcastAndReceive)
 {

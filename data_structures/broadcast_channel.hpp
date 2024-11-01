@@ -1,13 +1,13 @@
-#ifndef CHANNEL_HPP
-#define CHANNEL_HPP
+#ifndef BROADCAST_CHANNEL_HPP
+#define BROADCAST_CHANNEL_HPP
 
 #include <mutex>
 #include <condition_variable>
 #include <optional>
 #include <stdexcept>
-
+#include "async_channel.hpp"
 template <typename T>
-class BroadcastChannelNode
+class BroadcastChannelNode : public AsyncChannel<T>
 {
 public:
     BroadcastChannelNode(const T &value, size_t lifes);
@@ -100,6 +100,6 @@ private:
     void clear();
 };
 
-#include "channel.tpp"
+#include "broadcast_channel.tpp"
 
 #endif // CHANNEL_HPP

@@ -1,5 +1,5 @@
-#ifndef CHANNEL_TPP
-#define CHANNEL_TPP
+#ifndef BROADCAST_CHANNEL_TPP
+#define BROADCAST_CHANNEL_TPP
 
 #include <mutex>
 #include <condition_variable>
@@ -143,6 +143,6 @@ private:
     }
 };
 
-#include "channel.tpp"
+#include "broadcast_channel.tpp"
 
 #endif // CHANNEL_TPP
