@@ -31,6 +31,7 @@ add_executable(
     tests/main_test.cpp
     data_structures/linked_list_test.cpp
     data_structures/avl_tree_test.cpp  # Add the avl_tree test file
+    data_structures/channel_test.cpp   # Add the channel test file
 )
 
 # Link libraries to the test executable

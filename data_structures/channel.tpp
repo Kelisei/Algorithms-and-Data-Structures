@@ -67,7 +67,7 @@ public:
         conditionVariable.notify_all();
     }
 
-    bool empty() const
+    bool isEmpty() const
     {
         std::lock_guard<std::mutex> lock(channelMutex);
         return head == nullptr;
@@ -86,7 +86,7 @@ public:
     }
 
 private:
-    std::mutex channelMutex;
+    mutable std::mutex channelMutex;
     std::condition_variable conditionVariable;
     BroadcastChannelNode<T> *head;
     BroadcastChannelNode<T> *tail;
@@ -114,9 +114,9 @@ private:
         {
             return std::nullopt;
         }
-
         auto temp = head;
         temp->decreaseLifes();
+        auto value = temp->getValue();
         if (temp->shouldDelete())
         {
             size--;
@@ -125,11 +125,9 @@ private:
             {
                 tail = nullptr;
             }
-            auto value = temp->getValue();
             delete temp;
-            return value;
         }
-        return temp->getValue();
+        return value;
     }
 
     void clear()
@@ -144,5 +142,7 @@ private:
         size = 0;
     }
 };
+
+#include "channel.tpp"
 
 #endif // CHANNEL_TPP
