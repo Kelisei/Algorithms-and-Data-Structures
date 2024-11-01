@@ -18,6 +18,10 @@ template <typename T>
 void AVLNode<T>::setRight(AVLNode<T> *right) { this->right = right; }
 template <typename T>
 void AVLNode<T>::setHeight(int height) { this->height = height; }
+template <typename T>
+void AVLNode<T>::setData(const T &data) { this->data = data; }
+template <typename T>
+AVLNode<T>::~AVLNode() {}
 
 template <typename T>
 AVLTree<T>::AVLTree(const T &data) : root(new AVLNode<T>(data)) {}
@@ -28,7 +32,7 @@ void AVLTree<T>::insert(const T &data) { root = insert(root, data); }
 template <typename T>
 void AVLTree<T>::remove(const T &data) { root = remove(root, data); }
 template <typename T>
-bool AVLTree<T>::contains(const T &data) { return contains(root, data); }
+bool AVLTree<T>::contains(const T &data) const { return contains(root, data); }
 template <typename T>
 void AVLTree<T>::inOrderTraversal(void (*func)(T data)) { inOrderTraversal(root, func); }
 template <typename T>
@@ -83,6 +87,81 @@ AVLNode<T> *AVLTree<T>::insert(AVLNode<T> *node, T data)
 
     return node;
 }
+
+template <typename T>
+AVLNode<T> *AVLTree<T>::remove(AVLNode<T> *node, T data)
+{
+    if (node == nullptr)
+    {
+        return node;
+    }
+    if (data < node->getData())
+    {
+        node->setLeft(remove(node->getLeft(), data));
+    }
+    else if (data > node->getData())
+    {
+        node->setRight(remove(node->getRight(), data));
+    }
+    else
+    {
+        if (node->getLeft() == nullptr || node->getRight() == nullptr)
+        {
+            AVLNode<T> *temp = node->getLeft() ? node->getLeft() : node->getRight();
+            if (temp == nullptr)
+            {
+                temp = node;
+                node = nullptr;
+            }
+            else
+            {
+                *node = *temp;
+            }
+            delete temp;
+        }
+        else
+        {
+            AVLNode<T> *temp = node->getRight();
+            while (temp->getLeft() != nullptr)
+            {
+                temp = temp->getLeft();
+            }
+            node->setData(temp->getData());
+            node->setRight(remove(node->getRight(), temp->getData()));
+        }
+    }
+
+    if (node == nullptr)
+    {
+        return node;
+    }
+
+    node->setHeight(1 + std::max(getHeight(node->getLeft()), getHeight(node->getRight())));
+
+    int balance = getBalance(node);
+    // Left Left Case
+    if (balance > 1 && getBalance(node->getLeft()) >= 0)
+    {
+        return rightRotate(node);
+    } // Right Right Case
+    if (balance < -1 && getBalance(node->getRight()) <= 0)
+    {
+        return leftRotate(node);
+    } // Left Right Case
+    if (balance > 1 && getBalance(node->getLeft()) < 0)
+    {
+        node->setLeft(leftRotate(node->getLeft()));
+        return rightRotate(node);
+    } // Right Left Case
+    if (balance < -1 && getBalance(node->getRight()) > 0)
+    {
+        node->setRight(rightRotate(node->getRight()));
+        return leftRotate(node);
+    }
+
+    return node;
+}
+
 template <typename T>
 int AVLTree<T>::getHeight(AVLNode<T> *node)
 {
@@ -133,7 +212,7 @@ AVLNode<T> *AVLTree<T>::leftRotate(AVLNode<T> *node)
 }
 
 template <typename T>
-bool AVLTree<T>::contains(AVLNode<T> *node, T data)
+bool AVLTree<T>::contains(AVLNode<T> *node, T data) const
 {
     if (node == nullptr)
     {
@@ -189,30 +268,48 @@ void AVLTree<T>::postOrderTraversal(AVLNode<T> *node, void (*func)(T data))
 template <typename T>
 void AVLTree<T>::clear()
 {
-    root->clear();
+    clear(root);
     root = nullptr;
 }
 
 template <typename T>
-bool AVLTree<T>::isEmpty()
+void AVLTree<T>::clear(AVLNode<T> *node)
+{
+    if (node == nullptr)
+    {
+        return;
+    }
+    clear(node->getLeft());
+    clear(node->getRight());
+    delete node;
+}
+
+template <typename T>
+bool AVLTree<T>::isEmpty() const
 {
     return root == nullptr;
 }
 
 template <typename T>
-size_t AVLTree<T>::size()
+size_t AVLTree<T>::size() const
 {
     return size(root);
 }
 
 template <typename T>
-size_t AVLTree<T>::size(AVLNode<T> *node)
+size_t AVLTree<T>::size(AVLNode<T> *node) const
 {
     if (node == nullptr)
     {
         return 0;
     }
     return 1 + size(node->getLeft()) + size(node->getRight());
+}
+
+template <typename T>
+AVLTree<T>::~AVLTree()
+{
+    clear();
 }
 
 #endif
