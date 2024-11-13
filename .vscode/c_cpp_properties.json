@@ -3,7 +3,10 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/low_level/libraries",
+                "${workspaceFolder}/low_level/data_structures",
+                "${workspaceFolder}/low_level/algorithms"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
